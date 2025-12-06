@@ -1,0 +1,28 @@
+{
+    "name": "maestroerror/postiz-php-sdk",
+    "description": "PHP SDK for Postiz - opensource Social media scheduling platform",
+    "type": "library",
+    "require": {
+        "saloonphp/saloon": "^3.14"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Maestroerror\\PostizClient\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "MaestroError"
+        }
+    ],
+    "require-dev": {
+        "pestphp/pest": "^4.1",
+        "friendsofphp/php-cs-fixer": "^3.91"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
