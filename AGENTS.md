@@ -1,5 +1,9 @@
 # AI Agent Instructions
 
+## Project
+
+PHP SDK based on Saloon for interacting with Postiz API.
+
 ## Standards
 
 Follow best PHP and Software Engineering practices, including:
