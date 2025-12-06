@@ -33,6 +33,8 @@ class UpdatePostRequest extends Request implements HasBody
 
     protected function defaultBody(): array
     {
-        return $this->data;
+        return array_merge([
+            'tags' => [],
+        ], $this->data);
     }
 }

@@ -95,12 +95,44 @@ $response = $client->createPost([
     'type' => 'now', // or 'schedule'
     'date' => '2024-12-14T10:00:00.000Z',
     'shortLink' => false,
-    'tags' => [],
     'posts' => [
         [
             'integration' => ['id' => 'integration-id'],
             'value' => [
                 ['content' => 'Your content here', 'image' => []],
+            ],
+        ],
+    ],
+]);
+```
+
+**Using Carbon for dates:**
+
+```php
+use Carbon\Carbon;
+
+$response = $client->createPost([
+    'type' => 'schedule',
+    'date' => Carbon::now()->addHours(2)->toIso8601String(), // Schedule 2 hours from now
+    'posts' => [
+        [
+            'integration' => ['id' => 'integration-id'],
+            'value' => [
+                ['content' => 'Scheduled post', 'image' => []],
+            ],
+        ],
+    ],
+]);
+
+// Or for a specific date/time
+$response = $client->createPost([
+    'type' => 'schedule',
+    'date' => Carbon::parse('2024-12-25 14:30:00', 'UTC')->toIso8601String(),
+    'posts' => [
+        [
+            'integration' => ['id' => 'integration-id'],
+            'value' => [
+                ['content' => 'Christmas post', 'image' => []],
             ],
         ],
     ],

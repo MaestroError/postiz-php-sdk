@@ -141,6 +141,31 @@ test('can delete a post', function () {
         ->and($response->json('success'))->toBeTrue();
 });
 
+test('can upload file', function () {
+    // Create a temporary file for testing
+    $tmpFile = tempnam(sys_get_temp_dir(), 'postiz_test_');
+    file_put_contents($tmpFile, 'test image content');
+
+    $mockResponse = MockResponse::make([
+        'id' => 'upload-456',
+        'path' => 'https://uploads.postiz.com/uploaded-file.jpg',
+    ]);
+
+    $mock = mockClient([
+        '*' => $mockResponse,
+    ]);
+
+    $client = createTestClient('test-key', $mock);
+    $response = $client->uploadFile($tmpFile);
+
+    expect($response->status())->toBe(200)
+        ->and($response->json())->toHaveKey('id')
+        ->and($response->json())->toHaveKey('path');
+
+    // Clean up
+    unlink($tmpFile);
+});
+
 test('can upload file from URL', function () {
     $mockResponse = MockResponse::make([
         'id' => 'upload-789',

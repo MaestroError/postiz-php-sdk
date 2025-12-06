@@ -29,10 +29,6 @@ pest()->extend(Tests\TestCase::class)->in(__DIR__);
 |
 */
 
-expect()->extend('toBeOne', function () {
-    return $this->toBe(1);
-});
-
 /*
 |--------------------------------------------------------------------------
 | Functions
