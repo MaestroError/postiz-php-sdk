@@ -22,6 +22,6 @@ class DeletePostRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/posts/' . $this->postId;
+        return '/posts/' . rawurlencode($this->postId);
     }
 }

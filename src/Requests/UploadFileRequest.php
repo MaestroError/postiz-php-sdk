@@ -48,7 +48,7 @@ class UploadFileRequest extends Request implements HasBody
     protected function defaultBody(): array
     {
         return [
-            new MultipartValue('file', file_get_contents($this->filePath), basename($this->filePath)),
+            new MultipartValue('file', fopen($this->filePath, 'r'), basename($this->filePath)),
         ];
     }
 }

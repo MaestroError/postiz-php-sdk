@@ -28,7 +28,7 @@ class UpdatePostRequest extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/posts/' . $this->postId;
+        return '/posts/' . rawurlencode($this->postId);
     }
 
     protected function defaultBody(): array
