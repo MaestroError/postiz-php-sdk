@@ -23,6 +23,21 @@ class UploadFileRequest extends Request implements HasBody
 
     public function __construct(protected string $filePath)
     {
+        if (! file_exists($this->filePath)) {
+            throw new \InvalidArgumentException("File does not exist: {$this->filePath}");
+        }
+
+        if (! is_readable($this->filePath)) {
+            throw new \InvalidArgumentException("File is not readable: {$this->filePath}");
+        }
+
+        // Check file size (limit to 100MB by default)
+        $maxSize = 100 * 1024 * 1024; // 100MB in bytes
+        $fileSize = filesize($this->filePath);
+
+        if ($fileSize > $maxSize) {
+            throw new \InvalidArgumentException("File size exceeds maximum allowed size of 100MB");
+        }
     }
 
     public function resolveEndpoint(): string

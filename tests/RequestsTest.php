@@ -7,6 +7,7 @@ use Maestroerror\PostizClient\Requests\DeletePostRequest;
 use Maestroerror\PostizClient\Requests\GenerateVideoRequest;
 use Maestroerror\PostizClient\Requests\GetIntegrationsRequest;
 use Maestroerror\PostizClient\Requests\UpdatePostRequest;
+use Maestroerror\PostizClient\Requests\UploadFileRequest;
 use Maestroerror\PostizClient\Requests\UploadFromUrlRequest;
 use Maestroerror\PostizClient\Requests\VideoFunctionRequest;
 use Saloon\Enums\Method;
@@ -62,4 +63,22 @@ test('VideoFunctionRequest has correct method and endpoint', function () {
 
     expect($request->getMethod())->toBe(Method::POST)
         ->and($request->resolveEndpoint())->toBe('/video/function');
+});
+
+test('UploadFileRequest validates file exists', function () {
+    expect(fn () => new UploadFileRequest('/non/existent/file.jpg'))
+        ->toThrow(\InvalidArgumentException::class, 'File does not exist');
+});
+
+test('UploadFileRequest validates file is readable', function () {
+    // Create a temporary file for testing
+    $tmpFile = tempnam(sys_get_temp_dir(), 'postiz_test_');
+    chmod($tmpFile, 0000); // Make it unreadable
+
+    expect(fn () => new UploadFileRequest($tmpFile))
+        ->toThrow(\InvalidArgumentException::class, 'File is not readable');
+
+    // Clean up
+    chmod($tmpFile, 0644);
+    unlink($tmpFile);
 });
