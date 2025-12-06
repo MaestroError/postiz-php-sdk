@@ -1,2 +1,4 @@
 /vendor/
 postiz-api-key.php
+.phpunit.cache/
+.php-cs-fixer.cache
